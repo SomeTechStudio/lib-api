@@ -102,7 +102,7 @@ paths:
           content: 
             application/json: 
               schema:
-                $ref: "#/components/schemas/Subscription"
+                $ref: "#/components/schemas/SubscriptionUpdateResponse"
         'default': 
           description: Все нестандартное
           content: 
@@ -123,10 +123,8 @@ paths:
             type: string
             example: 12345
       responses:
-        '200':
+        '204':
           description: Успешное удаление
-          content: 
-            application/json: {}
         'default': 
           description: Все нестандартное
           content: 
@@ -146,7 +144,7 @@ components:
           example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
         title:
           type: string
-          example: sql
+          example: SQL
 
     Subscriptions:
       type: array
@@ -171,7 +169,21 @@ components:
       properties:
          title:
           type: string
-          example: sql
+          example: SQL
+
+    SubscriptionUpdateResponse:
+      type: object
+      required:
+        - subscriptionId
+        - title
+      properties:
+        subscriptionId:
+          type: string
+          format: uuid
+          example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+        title:
+          type: string
+          example: English
         
 
 
