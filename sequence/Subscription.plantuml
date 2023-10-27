@@ -1,0 +1,36 @@
+@startuml Subscription
+autonumber
+skinparam {
+    MaxMessageSize 150
+    BoxPadding 10   
+    }
+skinparam sequence {
+    ParticipantPadding 30
+    MessageAlign left
+}
+
+participant "ms-subscription" as Sb order 10
+participant "ms-content" as Cn order 40
+participant "ms-telegram" as Tgm order 60
+participant "api-telegram" as Api order 80
+
+activate Sb
+Sb -> Sb: Получение из таблицы subscription_user_info список пользователей для рассылки
+Sb -> Cn: GET/subscriptions/{subscriptionId}/contents?orderNumber={orderNumber}\nЗапрос контента
+activate Cn
+||45||
+Cn -> Sb: Response 200 Ok
+||45||
+deactivate Cn
+Sb -> Tgm: POST/send \nОтправка контента для пользователей
+activate Tgm
+||20||
+Tgm -> Sb: Response 204 Ok
+deactivate Sb
+Tgm -> Api: Отправляет контент пользователям Telegram
+||20||
+deactivate Tgm
+activate Api
+deactivate Api
+
+@enduml

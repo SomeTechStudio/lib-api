@@ -1,0 +1,61 @@
+openapi: 3.0.0
+info:
+  title: Пользователи OpenAPI спецификация
+  version: 0.0.1
+servers:
+    - url: https://62.109.27.168:9443/
+      description: Dev server
+paths:
+  /send:
+    post:
+      summary: Метод отправки контента в телеграмм
+      tags:
+        - Telegram
+      operationId: sendContent
+      requestBody:
+        required: true
+        content: 
+          application/json: 
+            schema:
+              $ref: "#/components/schemas/TelegramSendContentRequest"
+            
+      responses:
+        '204':
+          description: Контент отправлен
+        'default': 
+          description: Все нестандартное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    TelegramSendContentRequest:
+      type: array
+      items:
+        $ref: "#/components/schemas/TelegramSendContent"
+
+    TelegramSendContent:
+      type: object
+      required:
+        - telegramId
+        - content
+      properties: 
+        telegramId:
+          type: string
+          example: 343562780
+        content:
+          type: string
+          example: SQL (Structured Query Language, или язык структурированных запросов) — это декларативный язык программирования (язык запросов), который используют для создания, обработки и хранения данных в реляционных БД.
+  
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+ 

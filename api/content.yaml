@@ -1,0 +1,147 @@
+openapi: 3.0.0
+info:
+  title: Контент OpenAPI спецификация
+  version: 0.0.1
+servers:
+    - url: https://62.109.27.168:9443/
+      description: Dev server
+paths:
+  /subscriptions/{subscriptionId}/contents:
+    get:
+      summary: Метод получения всего контента по подписке
+      tags:
+        - Contents
+      operationId: getContents
+      parameters: 
+        - name: subcriptionId
+          in: path 
+          required: true
+          description: Идентификатор подписки
+          schema: 
+            type: string
+            format: uuid
+            example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+      responses:
+        '200':
+          description: Успешный ответ с контентом
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/Contents"
+        'default': 
+          description: Все нестандартное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"     
+    post:
+      summary: Метод создания контента по выбранной подписке
+      tags:
+        - Contents
+      operationId: createContent
+      parameters: 
+        - name: subscriptionId
+          in: path 
+          required: true
+          description: Идентификатор подписки
+          schema: 
+            type: string
+            format: uuid
+            example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+      requestBody:
+        required: true
+        content: 
+          application/json: 
+            schema:
+              $ref: "#/components/schemas/Content"
+      responses:
+        '200':
+          description: Успешный ответ с одной подпиской
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/Content"
+        'default': 
+          description: Все нестандартное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"
+
+  /subscriptions/{subscriptionId}/contents?orderNumber={orderNumber}:
+    get:
+      summary: Метод получения контента по subscriptionId и orderNumber
+      tags:
+        - Contents
+      operationId: getContentByOrderNumber
+      parameters: 
+        - name: subcriptionId
+          in: path
+          required: true
+          description: Идентификатор подписки
+          schema: 
+            type: string
+            format: uuid
+            example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+        - name: orderNumber
+          in: query
+          required: true
+          description: Номер статьи
+          schema:
+            type: integer
+            example: 12 
+      responses:
+        '200':
+          description: Успешный ответ с контентом
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/Contents"
+        'default': 
+          description: Все нестандартное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Content:
+      type: object
+      required:
+        - contentId
+        - subscriptionTitle
+        - orderNumber
+        - subscriptionId
+      properties: 
+        contentId: 
+          type: string
+          format: uuid
+          example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+        content:
+          type: string
+          example: SQL (Structured Query Language, или язык структурированных запросов) — это декларативный язык программирования (язык запросов), который используют для создания, обработки и хранения данных в реляционных БД.
+        subscriptionTitle:
+          type: string
+          example: sql
+        orderNumber:
+          type: integer
+          example: 12
+        subscriptionId:
+          type: string
+          format: uuid
+          example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+    Contents:
+      type: array
+      items:
+        $ref: "#/components/schemas/Content"
+    Error:
+      type: object
+      required: 
+        - code
+        - message
+      properties: 
+        code: 
+          type: integer
+        message:
+          type: string

@@ -1,0 +1,181 @@
+openapi: 3.0.0
+info:
+  title: Подписки OpenAPI спецификация
+  version: 0.0.1
+servers:
+    - url: https://62.109.27.168:9443/
+      description: Dev server
+paths:
+  /subscriptions:
+    get:
+      summary: Метод получения списка подписок
+      tags:
+        - Subscriptions
+      operationId: getAllsubscriptions
+      responses:
+        '200':
+          description: Успешный ответ со списком подписок
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/Subscriptions"
+        'default': 
+          description: Все нестандартное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Метод создания подписки
+      tags:
+        - Subscriptions
+      operationId: createSubscription
+      requestBody:
+        required: true
+        content: 
+          application/json: 
+            schema:
+              $ref: "#/components/schemas/Subscription"
+      responses:
+        '200':
+          description: Успешный ответ с одной подпиской
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/Subscription"
+        'default': 
+          description: Все нестандартное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"
+            
+  /subscriptions/{subscriptionId}:
+    get:
+      summary: Метод получения подписки по идентификатору
+      tags:
+        - Subscriptions
+      operationId: getAllsubscriptionById
+      parameters: 
+        - name: subcriptionId
+          in: path 
+          required: true
+          description: Идентификатор подписки
+          schema: 
+            type: string
+            example: 12345
+      responses:
+        '200':
+          description: Успешный ответ с одной подпиской
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/Subscription"
+        'default': 
+          description: Все нестандартное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"
+    patch:
+      summary: Метод изменения названия подписки
+      tags:
+        - Subscriptions
+      operationId: changeSubscribtionById
+      parameters: 
+        - name: subcriptionId
+          in: path 
+          required: true
+          description: Идентификатор подписки
+          schema: 
+            type: string
+            example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+      requestBody:
+        required: true
+        content: 
+          application/json: 
+            schema:
+              $ref: "#/components/schemas/SubscriptionUpdateRequest"  
+      responses:
+        '200':
+          description: Успешный ответ с измененной подпиской
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/Subscription"
+        'default': 
+          description: Все нестандартное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Метод удаления подписки по идентификатору
+      tags:
+        - Subscriptions
+      operationId: deleteSubscriptionById
+      parameters: 
+        - name: subcriptionId
+          in: path
+          required: true
+          description: Идентификатор подписки
+          schema: 
+            type: string
+            example: 12345
+      responses:
+        '200':
+          description: Успешное удаление
+          content: 
+            application/json: {}
+        'default': 
+          description: Все нестандартное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Subscription:
+      type: object
+      required:
+        - title
+      properties: 
+        subscriptionId: 
+          type: string
+          format: uuid
+          example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+        title:
+          type: string
+          example: sql
+
+    Subscriptions:
+      type: array
+      items:
+        $ref: "#/components/schemas/Subscription"
+
+    Error:
+      type: object
+      required: 
+        - code
+        - message
+      properties: 
+        code: 
+          type: integer
+        message:
+          type: string
+
+    SubscriptionUpdateRequest:
+      type: object
+      required:
+        - title
+      properties:
+         title:
+          type: string
+          example: sql
+        
+
+
+
+
+
+

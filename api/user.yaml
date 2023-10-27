@@ -1,0 +1,67 @@
+openapi: 3.0.0
+info:
+  title: Пользователи OpenAPI спецификация
+  version: 0.0.1
+servers:
+    - url: https://62.109.27.168:9443/
+      description: Dev server
+paths:
+  /users:
+    get:
+      summary: Метод получения списка пользователей
+      tags:
+        - Users
+      operationId: getAllusers
+      responses:
+        '200':
+          description: Успешный ответ со списком пользователей
+          content: 
+            application/json: 
+              schema:
+                $ref: "#/components/schemas/Users"
+        'default': 
+          description: Все нестандартное
+          content: 
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - userId
+      properties:
+        userId:
+          type: string
+          format: uuid
+          example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+        firstName:
+          type: string
+          example: Veronika
+        lastName:
+          type: string
+          example: Bichik
+        userName:
+          type: string
+          example: VBichik
+        telegramId:
+          type: string
+          example: 34435262883635
+        isBlocked:
+          type: boolean
+          example: faulse
+    Users:
+      type: array
+      items:
+        $ref: "#/components/schemas/User"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
