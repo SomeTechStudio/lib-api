@@ -12,60 +12,60 @@ paths:
       tags:
         - Contents
       operationId: getContents
-      parameters: 
+      parameters:
         - name: subcriptionId
-          in: path 
+          in: path
           required: true
           description: Идентификатор подписки
-          schema: 
+          schema:
             type: string
             format: uuid
             example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
       responses:
         '200':
           description: Успешный ответ с контентом
-          content: 
-            application/json: 
-              schema:
-                $ref: "#/components/schemas/Contents"
-        'default': 
-          description: Все нестандартное
-          content: 
+          content:
             application/json:
-              schema: 
-                $ref: "#/components/schemas/Error"     
+              schema:
+                $ref: "#/components/schemas/Content"
+        'default':
+          description: Все нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     post:
       summary: Метод создания контента по выбранной подписке
       tags:
         - Contents
       operationId: createContent
-      parameters: 
+      parameters:
         - name: subscriptionId
-          in: path 
+          in: path
           required: true
           description: Идентификатор подписки
-          schema: 
+          schema:
             type: string
             format: uuid
             example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
       requestBody:
         required: true
-        content: 
-          application/json: 
+        content:
+          application/json:
             schema:
-              $ref: "#/components/schemas/Content"
+              $ref: "#/components/schemas/ContentCreateRequest"
       responses:
         '200':
           description: Успешный ответ с одной подпиской
-          content: 
-            application/json: 
-              schema:
-                $ref: "#/components/schemas/Content"
-        'default': 
-          description: Все нестандартное
-          content: 
+          content:
             application/json:
-              schema: 
+              schema:
+                $ref: "#/components/schemas/ContentCreateResponse"
+        'default':
+          description: Все нестандартное
+          content:
+            application/json:
+              schema:
                 $ref: "#/components/schemas/Error"
 
   /subscriptions/{subscriptionId}/contents?orderNumber={orderNumber}:
@@ -74,12 +74,12 @@ paths:
       tags:
         - Contents
       operationId: getContentByOrderNumber
-      parameters: 
+      parameters:
         - name: subcriptionId
           in: path
           required: true
           description: Идентификатор подписки
-          schema: 
+          schema:
             type: string
             format: uuid
             example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
@@ -89,19 +89,19 @@ paths:
           description: Номер статьи
           schema:
             type: integer
-            example: 12 
+            example: 12
       responses:
         '200':
           description: Успешный ответ с контентом
-          content: 
-            application/json: 
-              schema:
-                $ref: "#/components/schemas/Contents"
-        'default': 
-          description: Все нестандартное
-          content: 
+          content:
             application/json:
-              schema: 
+              schema:
+                $ref: "#/components/schemas/ContentValue"
+        'default':
+          description: Все нестандартное
+          content:
+            application/json:
+              schema:
                 $ref: "#/components/schemas/Error"
 
 components:
@@ -110,38 +110,72 @@ components:
       type: object
       required:
         - contentId
+        - content
         - subscriptionTitle
         - orderNumber
         - subscriptionId
-      properties: 
-        contentId: 
+      properties:
+        subscriptionId:
+          type: string
+          format: uuid
+          example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+        subscriptionTitle:
+          type: string
+          example: SQL
+        contentId:
           type: string
           format: uuid
           example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
         content:
           type: string
           example: SQL (Structured Query Language, или язык структурированных запросов) — это декларативный язык программирования (язык запросов), который используют для создания, обработки и хранения данных в реляционных БД.
-        subscriptionTitle:
-          type: string
-          example: sql
         orderNumber:
           type: integer
           example: 12
+
+    ContentValue:
+      type: object
+      required:
+        - content
+      properties:
+        content:
+          type: string
+          example: SQL (Structured Query Language, или язык структурированных запросов) — это декларативный язык программирования (язык запросов), который используют для создания, обработки и хранения данных в реляционных БД.
+
+    ContentCreateRequest:
+      type: object
+      required:
+        - subscriptionTitle
+        - content
+        - orderNumber
+        - subscriptionId
+      properties:
         subscriptionId:
           type: string
           format: uuid
           example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
-    Contents:
-      type: array
-      items:
-        $ref: "#/components/schemas/Content"
+        subscriptionTitle:
+          type: string
+          example: SQL
+        content:
+          type: string
+          example: SQL (Structured Query Language, или язык структурированных запросов) — это декларативный язык программирования (язык запросов), который используют для создания, обработки и хранения данных в реляционных БД.
+        orderNumber:
+          type: integer
+          example: 12
+
+    ContentCreateResponse:
+      allOf:
+        - $ref: "#/components/schemas/Content"
+        - type: object
+
     Error:
       type: object
-      required: 
+      required:
         - code
         - message
-      properties: 
-        code: 
+      properties:
+        code:
           type: integer
         message:
           type: string
