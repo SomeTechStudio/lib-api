@@ -18,7 +18,7 @@ paths:
           content: 
             application/json: 
               schema:
-                $ref: "#/components/schemas/Subscriptions"
+                $ref: "#/components/schemas/SubscriptionsList"
         'default': 
           description: Все нестандартное
           content: 
@@ -35,14 +35,14 @@ paths:
         content: 
           application/json: 
             schema:
-              $ref: "#/components/schemas/Subscription"
+              $ref: "#/components/schemas/SubscriptionCreateRequest"
       responses:
         '200':
           description: Успешный ответ с одной подпиской
           content: 
             application/json: 
               schema:
-                $ref: "#/components/schemas/Subscription"
+                $ref: "#/components/schemas/SubscriptionCreateResponse"
         'default': 
           description: Все нестандартное
           content: 
@@ -70,7 +70,7 @@ paths:
           content: 
             application/json: 
               schema:
-                $ref: "#/components/schemas/Subscription"
+                $ref: "#/components/schemas/SubscriptionValue"
         'default': 
           description: Все нестандартное
           content: 
@@ -133,7 +133,7 @@ paths:
                 $ref: "#/components/schemas/Error"
 components:
   schemas:
-    Subscription:
+    SubscriptionValue:
       type: object
       required:
         - title
@@ -146,10 +146,10 @@ components:
           type: string
           example: SQL
 
-    Subscriptions:
+    SubscriptionsList:
       type: array
       items:
-        $ref: "#/components/schemas/Subscription"
+        $ref: "#/components/schemas/SubscriptionValue"
 
     Error:
       type: object
@@ -184,7 +184,20 @@ components:
         title:
           type: string
           example: English
-        
+
+    SubscriptionCreateRequest:
+          type: object
+          required:
+            - title
+          properties:
+            title:
+              type: string
+              example: SQL
+
+    SubscriptionCreateResponse:
+      allOf:
+        - $ref: "#/components/schemas/SubscriptionValue"
+        - type: object
 
 
 

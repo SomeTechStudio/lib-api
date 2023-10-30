@@ -110,6 +110,7 @@ components:
       type: object
       required:
         - contentId
+        - content
         - subscriptionTitle
         - orderNumber
         - subscriptionId
@@ -145,6 +146,7 @@ components:
       type: object
       required:
         - subscriptionTitle
+        - content
         - orderNumber
         - subscriptionId
       properties:
