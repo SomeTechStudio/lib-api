@@ -13,7 +13,7 @@ paths:
         - Contents
       operationId: getContents
       parameters:
-        - name: subcriptionId
+        - name: subscriptionId
           in: path
           required: true
           description: Идентификатор подписки
@@ -75,7 +75,7 @@ paths:
         - Contents
       operationId: getContentByOrderNumber
       parameters:
-        - name: subcriptionId
+        - name: subscriptionId
           in: path
           required: true
           description: Идентификатор подписки

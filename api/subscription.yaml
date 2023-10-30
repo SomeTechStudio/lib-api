@@ -11,7 +11,7 @@ paths:
       summary: Метод получения списка подписок
       tags:
         - Subscriptions
-      operationId: getAllsubscriptions
+      operationId: getAllSubscriptions
       responses:
         '200':
           description: Успешный ответ со списком подписок
@@ -55,7 +55,7 @@ paths:
       summary: Метод получения подписки по идентификатору
       tags:
         - Subscriptions
-      operationId: getAllsubscriptionById
+      operationId: getAllSubscriptionById
       parameters: 
         - name: subcriptionId
           in: path 
@@ -81,9 +81,9 @@ paths:
       summary: Метод изменения названия подписки
       tags:
         - Subscriptions
-      operationId: changeSubscribtionById
+      operationId: changeSubscriptionById
       parameters: 
-        - name: subcriptionId
+        - name: subscriptionId
           in: path 
           required: true
           description: Идентификатор подписки
@@ -115,7 +115,7 @@ paths:
         - Subscriptions
       operationId: deleteSubscriptionById
       parameters: 
-        - name: subcriptionId
+        - name: subscriptionId
           in: path
           required: true
           description: Идентификатор подписки
@@ -183,7 +183,7 @@ components:
           example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
         title:
           type: string
-          example: English
+          example: SQL
 
     SubscriptionCreateRequest:
           type: object
