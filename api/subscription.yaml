@@ -131,6 +131,38 @@ paths:
             application/json:
               schema: 
                 $ref: "#/components/schemas/Error"
+
+  /subscriptions/{subscriptionId}/users:
+    post:
+      summary: Метод добавления нового пользователя для выбранной подписки
+      tags:
+        - Subscriptions
+      operationId: addUser
+      parameters:
+        - name: subscriptionId
+          in: path
+          required: true
+          description: Идентификатор подписки
+          schema:
+            type: string
+            format: uuid
+            example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserAddSubscriptionRequest"
+      responses:
+        '204':
+          description: Пользователь подписан на данную подписку
+        'default':
+          description: Все нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   schemas:
     SubscriptionValue:
@@ -198,6 +230,31 @@ components:
       allOf:
         - $ref: "#/components/schemas/SubscriptionValue"
         - type: object
+
+    UserAddSubscriptionRequest:
+      type: object
+      required:
+        - userId
+        - subscriptionId
+        - telegramId
+      properties:
+        userId:
+          type: string
+          format: uuid
+          example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+        subscriptionId:
+          type: string
+          format: uuid
+          example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+        telegramId:
+          type: string
+          example: 34435262883635
+
+
+
+
+
+
 
 
 

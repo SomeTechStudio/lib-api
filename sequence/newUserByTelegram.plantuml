@@ -1,0 +1,29 @@
+@startuml AddUserBySubscription
+autonumber
+skinparam {
+    MaxMessageSize 150
+    BoxPadding 10
+    }
+skinparam sequence {
+    ParticipantPadding 30
+    MessageAlign left
+}
+
+participant "ms-subscription" as Sb order 60
+participant "ms-user" as Usr order 50
+participant "ms-telegram" as Tgm order 30
+participant "api-telegram" as Api order 10
+
+Api -> Tgm: Отправка пользователей для подписки
+activate Api
+deactivate Api
+activate Tgm
+Tgm -> Usr: Отправка пользователей для подписки
+deactivate Tgm
+activate Usr
+||10||
+Usr -> Usr: POST/users \nДобавление нового пользователя
+||20||
+Usr -> Sb: POST/subscriptions/{subscriptionId}/users \nДобавление пользователя для выбранной подписки
+activate Sb
+@enduml
