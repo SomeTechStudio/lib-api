@@ -16,21 +16,28 @@ participant "api-telegram" as Api order 80
 
 activate Sb
 Sb -> Sb: Получение из таблицы subscription_user_info список пользователей для рассылки
-Sb -> Cn: GET/subscriptions/{subscriptionId}/contents?orderNumber={orderNumber}\nЗапрос контента
-activate Cn
+||10||
+group   Loop    [Для каждого пользователя]
+    ||20||
+    Sb -> Cn: GET/subscriptions/{subscriptionId}/contents?orderNumber={orderNumber}\nЗапрос контента
+    activate Cn
+    ||45||
+    Cn -> Sb: Response 200 OK {ContentValue}
+    ||10||
+    deactivate Cn
+    end
 ||45||
-Cn -> Sb: Response 200 Ok
-||45||
-deactivate Cn
+
 Sb -> Tgm: POST/send \nОтправка контента для пользователей
 activate Tgm
 ||20||
-Tgm -> Sb: Response 204 Ok
-deactivate Sb
 Tgm -> Api: Отправляет контент пользователям Telegram
-||20||
-deactivate Tgm
 activate Api
+Api -> Tgm: Response 200 OK
 deactivate Api
+Tgm -> Sb: Response 204 OK
+||20||
+deactivate Sb
+deactivate Tgm
 
 @enduml

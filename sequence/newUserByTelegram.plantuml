@@ -8,22 +8,26 @@ skinparam sequence {
     ParticipantPadding 30
     MessageAlign left
 }
-
-participant "ms-subscription" as Sb order 60
-participant "ms-user" as Usr order 50
-participant "ms-telegram" as Tgm order 30
+participant "ms-user" as Usr order 40
+participant "ms-telegram-adapter" as Tgm order 30
 participant "api-telegram" as Api order 10
 
-Api -> Tgm: Отправка пользователей для подписки
+Api -> Tgm: У бота появился \nновый пользователь
 activate Api
-deactivate Api
 activate Tgm
-Tgm -> Usr: Отправка пользователей для подписки
-deactivate Tgm
-activate Usr
 ||10||
-Usr -> Usr: POST/users \nДобавление нового пользователя
+Tgm -> Api: Response 200 OK
+deactivate Api
+
+Tgm -> Usr: POST/users  \n{UserCreateRequest}
+activate Usr
+||50||
+Usr -> Usr:
+note right :Создание нового \nпользователя
+
+Usr -> Tgm: Response 200 OK \n{UserCreateResponse}
+deactivate Tgm
+deactivate Usr
 ||20||
-Usr -> Sb: POST/subscriptions/{subscriptionId}/users \nДобавление пользователя для выбранной подписки
-activate Sb
+
 @enduml

@@ -152,7 +152,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UserAddSubscriptionRequest"
+              $ref: "#/components/schemas/AddUserToSubscriptionRequest"
       responses:
         '204':
           description: Пользователь подписан на данную подписку
@@ -231,18 +231,13 @@ components:
         - $ref: "#/components/schemas/SubscriptionValue"
         - type: object
 
-    UserAddSubscriptionRequest:
+    AddUserToSubscriptionRequest:
       type: object
       required:
         - userId
-        - subscriptionId
         - telegramId
       properties:
         userId:
-          type: string
-          format: uuid
-          example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
-        subscriptionId:
           type: string
           format: uuid
           example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
