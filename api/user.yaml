@@ -25,6 +25,31 @@ paths:
             application/json:
               schema: 
                 $ref: "#/components/schemas/Error"
+    post:
+      summary: Метод добавления нового пользователя
+      tags:
+        - Users
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreateRequest"
+      responses:
+        '200':
+          description: Успешный ответ с одним пользователем
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserCreateResponse"
+        'default':
+          description: Все нестандартное
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
 components:
   schemas:
     User:
@@ -55,6 +80,33 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/User"
+
+    UserCreateRequest:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - userName
+        -
+      properties:
+        firstName:
+          type: string
+          example: Veronika
+        lastName:
+          type: string
+          example: Bichik
+        userName:
+          type: string
+          example: VBichik
+        telegramId:
+          type: string
+          example: 34435262883635
+
+    UserCreateResponse:
+     allOf:
+      - $ref: "#/components/schemas/User"
+      - type: object
+
     Error:
       type: object
       required:

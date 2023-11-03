@@ -1,0 +1,40 @@
+@startuml newUserByTelegram
+autonumber
+skinparam {
+    MaxMessageSize 150
+    BoxPadding 10
+    }
+skinparam sequence {
+    ParticipantPadding 100
+    MessageAlign left
+}
+participant "api-telegram" as Api
+participant "ms-telegram-adapter" as Tgm
+participant "ms-subscription" as Sb
+
+Api -> Tgm: Пользователь запросил \nсписок подписок
+activate Api
+activate Tgm
+||40||
+Tgm -> Sb: GET/subscriptions
+activate Sb
+||60||
+Sb -> Tgm: Response 200 OK \n{SubscriptionsList}
+deactivate Sb
+Tgm -> Api: Response 200 OK
+deactivate Api
+deactivate Tgm
+||80||
+Api -> Tgm: Пользователь подписался на подписку
+activate Api
+activate Tgm
+Tgm -> Sb: POST/subscriptions/{subscriptionId}/users
+activate Sb
+||80||
+Sb -> Tgm: Response 204 OK
+deactivate Sb
+Tgm -> Api: Response 204 OK
+deactivate Tgm
+deactivate Api
+
+@enduml
