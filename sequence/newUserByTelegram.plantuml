@@ -1,15 +1,15 @@
-@startuml AddUserBySubscription
+@startuml newUserByTelegram
 autonumber
 skinparam {
     MaxMessageSize 150
     BoxPadding 10
     }
 skinparam sequence {
-    ParticipantPadding 30
+    ParticipantPadding 80
     MessageAlign left
 }
-participant "ms-user" as Usr order 40
-participant "ms-telegram-adapter" as Tgm order 30
+participant "ms-user" as Usr order 70
+participant "ms-telegram-adapter" as Tgm order 40
 participant "api-telegram" as Api order 10
 
 Api -> Tgm: У бота появился \nновый пользователь
