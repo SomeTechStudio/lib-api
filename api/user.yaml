@@ -18,7 +18,7 @@ paths:
           content: 
             application/json: 
               schema:
-                $ref: "#/components/schemas/Users"
+                $ref: "#/components/schemas/UserValue"
         'default': 
           description: Все нестандартное
           content: 
@@ -52,7 +52,7 @@ paths:
 
 components:
   schemas:
-    User:
+    UserValue:
       type: object
       required:
         - userId
@@ -76,10 +76,10 @@ components:
         isBlocked:
           type: boolean
           example: faulse
-    Users:
+    UserValueList:
       type: array
       items:
-        $ref: "#/components/schemas/User"
+        $ref: "#/components/schemas/UserValue"
 
     UserCreateRequest:
       type: object
@@ -104,7 +104,7 @@ components:
 
     UserCreateResponse:
      allOf:
-      - $ref: "#/components/schemas/User"
+      - $ref: "#/components/schemas/UserValue"
       - type: object
 
     Error:
