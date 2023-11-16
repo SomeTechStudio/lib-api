@@ -1,7 +1,7 @@
 @startuml Subscription
 autonumber
 skinparam {
-    MaxMessageSize 150
+    MaxMessageSize 420
     BoxPadding 10   
     }
 skinparam sequence {
@@ -11,8 +11,9 @@ skinparam sequence {
 
 participant "ms-subscription" as Sb order 10
 participant "ms-content" as Cn order 40
-participant "ms-telegram" as Tgm order 60
-participant "api-telegram" as Api order 80
+queue "kafka" as Kf order 150
+participant "ms-telegram" as Tgm order 150
+participant "api-telegram" as Api order 200
 
 activate Sb
 Sb -> Sb: Получение из таблицы subscription_user_info список пользователей для рассылки
@@ -28,16 +29,35 @@ group   Loop    [Для каждого пользователя]
     end
 ||45||
 
-Sb -> Tgm: POST/send \nОтправка контента для пользователей
-activate Tgm
-||20||
-Tgm -> Api: Отправляет контент пользователям Telegram
-activate Api
-Api -> Tgm: Response 200 OK
-deactivate Api
-Tgm -> Sb: Response 204 OK
-||20||
+Sb -> Kf: ContentToSendPreparedEvent
 deactivate Sb
+
+||20||
+activate Kf
+Kf -> Tgm: read ContentToSendPreparedEvent
+
+||30||
+deactivate Kf
+activate Tgm
+group Loop [Для каждого отправленного сообщения \nформируем TelegramMassageSentEvent]
+    Tgm -> Api: Отправляет контент пользователям Telegram
+    activate Api
+    Api -> Tgm: Response 200 OK
+    deactivate Api
+    end
+
+Tgm -> Kf: TelegramMassageSentEvent
+||20||
 deactivate Tgm
+activate Kf
+
+Kf -> Sb: read TelegramMassageSentEvent
+deactivate Kf
+activate Sb
+||50||
+Sb -> Sb:
+note right : Находим запись в subscription_user_info \nпо subscriptionId и telegramId. \nИнкрементируем order_number (+1)
+||20||
+
 
 @enduml

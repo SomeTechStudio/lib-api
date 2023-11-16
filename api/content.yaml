@@ -108,9 +108,14 @@ paths:
 components:
   schemas:
     AllSubscriptionContent:
-      type: array
-      items:
-        $ref: "#/components/schemas/ContentValue"
+      type: object
+      required:
+        - contentValueList
+      properties:
+        contentValueList:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContentValue"
 
     ContentValue:
       type: object

@@ -75,11 +75,17 @@ components:
           example: 34435262883635
         isBlocked:
           type: boolean
-          example: faulse
-    UserValueList:
-      type: array
-      items:
-        $ref: "#/components/schemas/UserValue"
+          example: false
+
+    UsersList:
+      type: object
+      required:
+        - userValueList
+      properties:
+        userValueList:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserValue"
 
     UserCreateRequest:
       type: object
