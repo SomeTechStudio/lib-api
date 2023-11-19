@@ -55,12 +55,11 @@ components:
     UserValue:
       type: object
       required:
-        - userId
+        - telegramId
       properties:
-        userId:
+        telegramId:
           type: string
-          format: uuid
-          example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
+          example: 34435262883635
         firstName:
           type: string
           example: Veronika
@@ -70,24 +69,26 @@ components:
         userName:
           type: string
           example: VBichik
-        telegramId:
-          type: string
-          example: 34435262883635
         isBlocked:
           type: boolean
-          example: faulse
-    UserValueList:
-      type: array
-      items:
-        $ref: "#/components/schemas/UserValue"
+          example: false
+
+    UsersList:
+      type: object
+      required:
+        - userValueList
+      properties:
+        userValueList:
+          type: array
+          items:
+            $ref: "#/components/schemas/UserValue"
 
     UserCreateRequest:
       type: object
       required:
         - firstName
         - lastName
-        - userName
-        -
+        - telegramId
       properties:
         firstName:
           type: string

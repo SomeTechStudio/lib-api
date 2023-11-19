@@ -19,7 +19,7 @@ activate Tgm
 Tgm -> Api: Response 200 OK
 deactivate Api
 
-Tgm -> Usr: POST/users  \n{UserCreateRequest}
+Tgm -> Usr: POST /users  \n{UserCreateRequest}
 activate Usr
 ||50||
 Usr -> Usr:
