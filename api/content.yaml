@@ -129,13 +129,9 @@ components:
     ContentCreateRequest:
       type: object
       required:
-        - subscriptionTitle
         - content
         - orderNumber
       properties:
-        subscriptionTitle:
-          type: string
-          example: SQL
         content:
           type: string
           example: SQL (Structured Query Language, или язык структурированных запросов) — это декларативный язык программирования (язык запросов), который используют для создания, обработки и хранения данных в реляционных БД.
@@ -147,7 +143,6 @@ components:
       type: object
       required:
         - subscriptionId
-        - subscriptionTitle
         - content
         - orderNumber
       properties:
@@ -155,9 +150,6 @@ components:
           type: string
           format: uuid
           example: 0e7932ef-6e23-4dc7-81cf-8e307fc13654
-        subscriptionTitle:
-          type: string
-          example: SQL
         content:
           type: string
           example: SQL (Structured Query Language, или язык структурированных запросов) — это декларативный язык программирования (язык запросов), который используют для создания, обработки и хранения данных в реляционных БД.
