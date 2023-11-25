@@ -6,7 +6,7 @@
 Проект предсталяет из себя систему для отправки контента пользователям по подписке. Основной клиент на данный момент - telegram.
 
 Основные сервисы: 
-* [ms-subscriptionhttps](//github.com/SomeTechStudio/ms-subscription)
+* [ms-subscription](https//github.com/SomeTechStudio/ms-subscription)
 * [ms-content](https://github.com/SomeTechStudio/ms-content)
 * [ms-users](https://github.com/SomeTechStudio/ms-users)
 * [ms-telegram-adapter](https://github.com/SomeTechStudio/ms-telegram-adapter)
