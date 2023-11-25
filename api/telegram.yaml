@@ -3,7 +3,7 @@ info:
   title: Пользователи OpenAPI спецификация
   version: 0.0.1
 servers:
-    - url: https://62.109.27.168:9443/
+    - url: host
       description: Dev server
 paths:
 
