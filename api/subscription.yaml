@@ -3,7 +3,7 @@ info:
   title: Подписки OpenAPI спецификация
   version: 0.0.1
 servers:
-    - url: https://62.109.27.168:9443/
+    - url: host
       description: Dev server
 paths:
   /subscriptions:
@@ -37,7 +37,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SubscriptionCreateRequest"
       responses:
-        '200':
+        '201':
           description: Успешный ответ с одной подпиской
           content: 
             application/json: 
